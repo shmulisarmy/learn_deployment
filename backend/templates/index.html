@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="pic.jpg" type="image/x-icon">
+    <title>generate_typing</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: aqua;
+            
+        }
+        .correct{ 
+            color: green;
+        }
+        .incorrect{ 
+            color: red;
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 id = 'wpm'>0</h1>
+    <h1 id = 'box'></h1>
+    <h1 id = 'typed'></h1>
+    
+    <script>
+        function get_cur_time(){
+            let now = new Date();
+            return performance.now();
+            }
+
+        function set_list_of_spans(sentence){
+            const span_list = [];
+            sentence.split('').forEach(letter => {
+                let span = document.createElement("span");
+                span.textContent = letter;
+                span_list.push(span);
+            })
+            return span_list
+            }
+
+        function func(event){
+            new_cur_time = get_cur_time();
+            if (event.key == 'Backspace'){
+                stuff_typed.pop();
+                if (letters_typed > 0){ 
+                letters_typed --;
+                span_list[letters_typed].classList.remove('correct');
+                span_list[letters_typed].classList.remove('incorrect');
+                letter_times.pop();
+                
+                }
+                if (span_list[letters_typed+1].classList.contains('correct')){
+                    number_of_corrects--;
+                }
+
+                }
+            
+            else{
+                if (event.key == sentence[letters_typed]){
+                    console.log('correct');
+                    number_of_corrects ++;
+                    span_list[letters_typed].classList.add('correct');
+                    letter_times.push(new_cur_time - cur_time)
+                }
+                else{
+                    console.log("wrong");
+                    span_list[letters_typed].classList.add('incorrect');
+                    letter_times.push(5)
+
+                }
+                
+                stuff_typed.push(event.key)
+                letters_typed ++;
+                cur_time = new_cur_time;
+            }
+            box.innerText = '';
+            span_list.forEach(span => {
+            box.appendChild(span)
+            console.log(letter_times);
+        })}
+        function make_counter(sentence){
+            const counter = {};
+            let letters = sentence.split('');
+            letters.forEach(letter =>{
+                if (letter in counter){
+                    counter[letter] ++;
+                } else{
+                    counter[letter] = 1;
+                }
+            })
+            return counter;
+            }
+
+        function turn_into_letter_stuggle_dict(times){
+            var letter_ocurences = {};
+            var letter_times = {};
+            for (let i = 0; i < times.length; i++){
+                let cur_letter = sentence[i];
+                
+                if (!(cur_letter in letter_times)){
+                    letter_times[cur_letter] = 0;
+                }
+                letter_times[cur_letter] += times[i];
+                letter_ocurences[cur_letter] += 1;
+            }
+            const new_letter_times = {};
+            for (let i = 0; i < new_letter_times.length; i++){
+                letter_times
+            }
+            return letter_times;}
+
+            
+        function update_wpm(){
+            if (span_list[span_list.length-1].classList.contains('correct') || span_list[span_list.length-1].classList.contains('incorrect')){
+                const letter_stuggle_dict = turn_into_letter_stuggle_dict(letter_times);
+                const sentence_counter = make_counter(sentence);
+                const sending_data = {};
+                Object.keys(sentence_counter).forEach(key => {
+                    sending_data[key] = letter_stuggle_dict[key]/sentence_counter[key];
+                })
+                const sending_data_turned_into_string = JSON.stringify(sending_data);
+                console.log("sending_data =", sending_data);
+
+                const new_sentence = send_to_server(sending_data);
+                initial_load(new_sentence);
+            }
+        
+            span_list.forEach(span => {
+                box.appendChild(span)
+            })
+            const new_time = new Date();
+            const new_seconds = (new_time.getHours() * 3600 + new_time.getMinutes() * 60 + new_time.getSeconds());
+            var time_since_started_in_seconds =  new_seconds - start_seconds;
+            var time_since_started_in_minutes = time_since_started_in_seconds/60;
+            var words_correct = number_of_corrects/5;
+            var wpm = words_correct/time_since_started_in_minutes;
+            console.log(time_since_started_in_seconds, time_since_started_in_minutes, words_correct, wpm);
+            wpm_on_html.innerText = Math.round(wpm);
+        }
+        function send_to_server(letter_counts){
+            const net = require('net');
+            const client = new net.Socket();
+            const SERVER_HOST = '127.0.0.1';
+            const SERVER_PORT = 5050;
+
+            client.connect(SERVER_PORT, SERVER_HOST, () => {
+                client.write(JSON.stringify(letter_counts));
+            });
+
+            client.on('data', (data) => {
+                return data
+            });
+
+            client.on('error', (err) => {
+                console.error(`Error: ${err.message}`);
+                console.log('server only runs from 9am - 5pm')
+                process.exit(1);
+            });
+
+                    }
+            function initial_load(passed_in_sentence) {
+                let start_time = new Date();
+                let start_seconds = (start_time.getHours() * 60 + start_time.getMinutes()) * 60 + start_time.getSeconds();
+                let wpm_on_html = document.getElementById('wpm');
+                let number_of_corrects = 0;
+                let letter_times = [];
+                let typed = document.getElementById('typed');
+                let stuff_typed = [];
+                let box = document.getElementById('box');
+                let sentence = passed_in_sentence;
+                let span_list = set_list_of_spans(sentence);
+                let letters_typed = 0;
+                let cur_time = get_cur_time();
+
+                return {
+                    start_time,
+                    start_seconds,
+                    wpm_on_html,
+                    number_of_corrects,
+                    letter_times,
+                    typed,
+                    stuff_typed,
+                    box,
+                    sentence,
+                    span_list,
+                    letters_typed,
+                    cur_time
+                };
+            }
+
+
+            let {
+                start_time,
+                start_seconds,
+                wpm_on_html,
+                number_of_corrects,
+                letter_times,
+                typed,
+                stuff_typed,
+                box,
+                sentence,
+                span_list,
+                letters_typed,
+                cur_time
+                } = initial_load('the brown fox jumped over the red fence');
+
+        window.addEventListener('keydown', func);
+        setInterval(update_wpm, 1);
+    </script>
+</body>
+
+</html>

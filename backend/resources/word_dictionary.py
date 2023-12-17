@@ -1,0 +1,102 @@
+from resources.store_word_lists import *
+
+word_replacement_dict = {
+    "ran": ran_replacements,
+    "through": through_replacements,
+    "park": park_replacements,
+    "feeling": feeling_replacements,
+    "wind": wind_replacements,
+    "hair": hair_replacements,
+    # "They": they_replacements,
+    "sailed": sailed_replacements,
+    "calm": calm_replacements,
+    "blue": blue_replacements,
+    "ocean": ocean_replacements,
+    "played": replacement_words_played,
+    "his": replacement_words_his,
+    "favorite": replacement_words_favorite,
+    "song": replacement_words_song,
+    "piano": replacement_words_piano,
+    "children": children_words,
+    "laughed": laughed_words,
+    "and": and_words,
+    "played": played_words,
+    "garden": garden_words,
+    "children": children_words,
+    "laughed": laughed_words,
+    "and": and_words,
+    "played": played_words,
+    # "in": in_words,
+    "garden.": garden_words,
+    "cat": cat_replacements,
+    "pounced": pounced_replacements,
+    "playful": playful_replacements,
+    "kitten": kitten_replacements,
+    "Birds": bird_replacements,
+    "chirped": chirped_replacements,
+    "trees": trees_replacements,
+    "all": all_replacements,
+    "day": day_replacements,
+    "watched": watched_synonyms,
+    "stars": stars_synonyms,
+    "twinkle": twinkle_synonyms,
+    "fire": fire_replacements,
+    "crackled": crackled_replacements,
+    "cozy": cozy_replacements,
+    "cabin": cabin_replacements,
+    "explored": explored_replacements,
+    "hidden": hidden_replacements,
+    "cave": cave_replacements,
+    # "with": with_replacements,
+    "flashlights": flashlights_replacements,
+    "flowers": flowers_replacements,
+    "bloomed": bloomed_replacements,
+    "riot": riot_replacements,
+    "colors": colors_replacements,
+    "car": car_replacements,
+    "zoomed": zoomed_replacements,
+    "empty": empty_replacements,
+    "highway": highway_replacements,
+    "danced": danced_replacements,
+    "gracefully": gracefully_replacements,
+    "music": music_replacements,
+    "puppy": puppy_replacements,
+    "wagged": wagged_replacements,
+    "tail": tail_replacements,
+    "excitement": excitement_replacements,
+    "moon": moon_replacements,
+    "shone": shone_replacements,
+    "brightly": brightly_replacements,
+    "over": over_replacements,
+    "quiet": quiet_replacements,
+    "town.": town_replacements,
+    "hiked": hike_replacements,
+    "summit": summit_replacements,
+    "tall": tall_replacements,
+    "mountain": mountain_replacements,
+    "ground": ground_replacements,
+    "gently": gently_replacements,
+    "fell": fell_replacements,
+    "snow": snow_replacements,
+    "painted": painted_replacements,
+    "beautiful": beautiful_replacements,
+    "landscape": landscape_replacements,
+    "canvas": canvas_replacements,
+    "wave": wave_replacements,
+    "crash": crash_replacements,
+    "against": against_replacements 
+}
+
+# #used in testing 
+# if __name__ == '__main__':
+#     lst = [i for i in word_replacement_dict]
+
+#     print(lst)
+
+#     random.shuffle(lst)
+#     random.shuffle(lst)
+#     random.shuffle(lst)
+
+
+#     print(lst)
+
