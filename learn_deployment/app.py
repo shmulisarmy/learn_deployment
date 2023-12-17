@@ -3,9 +3,9 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/<string:name>')
+@app.route('/')
 def ri(name):
-    return render_template('index.html', name = name)
+    return render_template('index.html')
 
 # @app.route('/')
 # def nri():
