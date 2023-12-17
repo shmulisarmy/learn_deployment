@@ -11,7 +11,7 @@ def get_sentence(letters: str):
     letters_dict = json.loads(letters)
     return {'data': get_sentence(letters_dict)}
 
-@app.route('\n')
+@app.route('/')
 def set_up_page():
     return render_template('index.html')
 
